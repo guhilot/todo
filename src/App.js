@@ -2,6 +2,11 @@ import React, {useState} from 'react'
 import './App.css';
 import todosData from "./todosData"
 import TodoItem from "./components/TodoItem"
+import Navbar from './components/Navbar'
+import Home from './views/Home'
+import Todo from './views/Todo'
+import Status from './views/Status'
+import {Switch, Route} from "react-router-dom"
 
 function App() {
 
@@ -30,9 +35,12 @@ function App() {
 
   return (
     <div className="App">
-      {todoItems}
-      <br/><br/>
-      {status}
+      <Navbar />
+      <Switch>
+        <Route exact path="/"><Home /></Route>
+        <Route path="/todo"><Todo todoItems={todoItems}/></Route>
+        <Route path="/status"><Status status={status}/></Route>
+      </Switch>
     </div>
   );
 }
