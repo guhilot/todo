@@ -1,23 +1,38 @@
-import logo from './logo.svg';
+import React, {useState} from 'react'
 import './App.css';
+import todosData from "./todosData"
+import TodoItem from "./components/TodoItem"
 
 function App() {
+
+  const [todo, setTodo] = useState(todosData)
+
+  console.log(todo)
+
+  function handleChange(id){
+    const updated = todo.map(item=>{
+      if(item.id===id){
+        item.completed = !item.completed
+      }
+      return item
+    })
+    setTodo(updated)
+  }
+
+  const todoItems = todo.map(item=> <TodoItem key={item.id} item={item} handleChange={handleChange}/>)
+  const status = todo.map(item=>{
+    return(
+      <div>
+        <p style={{color: item.completed? "green":"red"}}>{`${item.text}`} {`${item.completed? "is completed": "is not completed"}`}</p>
+      </div>
+    )
+  })
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {todoItems}
+      <br/><br/>
+      {status}
     </div>
   );
 }
